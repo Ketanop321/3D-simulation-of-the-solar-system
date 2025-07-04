@@ -1,3 +1,34 @@
+## Getting Started
+
+### Prerequisites
+- Node.js (make sure it is installed on your system)
+
+### Setup & Run (Development)
+
+Follow these steps in your terminal:
+
+```sh
+# 1. Clone the repository (or download and unzip it)
+git clone <repository-url>
+cd Solarsystem-3D
+
+# 2. Install dependencies 
+# npm install
+
+# 3. Start the development server
+node run.js
+```
+
+Now open your browser and go to:
+```
+http://localhost:8080
+```
+
+That's it! The 3D Solar System simulation should now be running locally.
+
+
+
+
 # 3D Solar System
 
 An interactive 3D simulation of our solar system built with three.js
@@ -36,32 +67,4 @@ An interactive 3D simulation of our solar system built with three.js
 
 ---
 
-## Getting Started
-
-### Prerequisites
-- Node.js (make sure it is installed on your system)
-
-### Setup & Run (Development)
-
-Follow these steps in your terminal:
-
-```sh
-# 1. Clone the repository (or download and unzip it)
-git clone <repository-url>
-cd Solarsystem-3D
-
-# 2. Install dependencies (if any)
-# (Skip if there is no package.json or dependencies)
-# npm install
-
-# 3. Start the development server
-node run.js
-```
-
-Now open your browser and go to:
-```
-http://localhost:8080
-```
-
-That's it! The 3D Solar System simulation should now be running locally.
 
