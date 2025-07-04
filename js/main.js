@@ -21,8 +21,10 @@ var params = {
 var calculateParams;
 var orbitParams;
 var cometParams;
+var speedParams = {};
 var control;
 var firstflag = true;
+var isPaused = false; // Track if animation is paused
 
 var options = {
     position: new THREE.Vector3(),
@@ -349,6 +351,39 @@ function initGui() {
         .onFinishChange(function () {
             window.addEventListener('mousedown', onWindowMouseDown, false);
         });
+    // Add orbital speed controls
+    var speedFolder = gui.addFolder('Orbital Speed');
+    var planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"];
+    
+    // Initialize speed parameters for each planet (1.0 is normal speed)
+    planets.forEach(function(planet) {
+        speedParams[planet] = 1.0;
+        speedFolder.add(speedParams, planet, 0.1, 10.0, 0.1).name(planet).onChange(function(value) {
+            window.removeEventListener('mousedown', onWindowMouseDown, false);
+            // The speed is applied in the orbit calculation
+        }).onFinishChange(function() {
+            window.addEventListener('mousedown', onWindowMouseDown, false);
+        });
+    });
+    
+    // Add Pause/Resume button
+    control.isPaused = false;
+    control.togglePause = function() {
+        control.isPaused = !control.isPaused;
+        isPaused = control.isPaused;
+        
+        if (control.isPaused) {
+            clock.stop();
+            control.pauseButton.name('Resume');
+        } else {
+            clock.start();
+            control.pauseButton.name('Pause');
+        }
+    };
+    
+    // Add the button to the GUI
+    control.pauseButton = gui.add(control, 'togglePause').name('Pause');
+    
     gui.add(control, "Collision");
     gui.add(control, "Roam");
     gui.add(control, "Screenshot");
@@ -413,14 +448,24 @@ function checkCrash() {
 
 function animate() {
     requestAnimationFrame(animate);
-    TWEEN.update();
-    if (roamingStatus) {
-        cameraControl.update(clock.getDelta());
-        if (control.Collision && checkCrash()) {
-            promptSound.play();
+    
+    // Only update animations if not paused
+    if (!isPaused) {
+        TWEEN.update();
+        
+        // Only update camera controls if not paused
+        if (roamingStatus) {
+            cameraControl.update(clock.getDelta());
+            if (control.Collision && checkCrash()) {
+                promptSound.play();
+            }
         }
+        
+        // Update the scene
+        render();
     }
-    render();
+    
+    // Always update stats to show FPS even when paused
     stats.update();
 }
 

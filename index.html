@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/solar.css">
+    <link rel="stylesheet" type="text/css" href="css/planet-modal.css">
 </head>
 <body>
 <div id="container" >
@@ -21,7 +22,21 @@
     <audio id="promptSound" src="res/prompt/ding.wav" />
 </div>
 <div id="info">
-    <a href="https://github.com/solarcg/SolarSys" target="_blank" rel="noopener">Pale Dots</a></div>
+    <button id="theme-toggle" class="theme-toggle" title="Toggle light/dark theme">
+        <svg class="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+    <a href="https://github.com/solarcg/SolarSys" target="_blank" rel="noopener">Pale Dots</a>
+</div>
     <!-- Libraries -->
     <script src="js/libs/jquery-3.2.1.min.js"></script>
     <script src="js/libs/three.min.js"></script>
@@ -57,9 +72,13 @@
     <!-- Animation -->
     <script src="js/animation.js"></script>
     <!-- Controls -->
+    <script src="js/planet-modal.js"></script>
+    <script src="js/planet-modal-hook.js"></script>
     <script src="js/control.js"></script>
     <script src="js/libs/dat.gui.min.js"></script>
     <!-- Initializers -->
     <script src="js/main.js"></script>
+    <!-- Theme Switcher -->
+    <script src="js/theme.js"></script>
 </body>
 </html>

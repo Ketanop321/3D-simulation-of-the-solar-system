@@ -7,6 +7,35 @@ var mouseStatus = {
 };
 
 function onWindowMouseMove(event) {
+    // --- PLANET HOVER MODAL LOGIC START ---
+    if (window.getPlanetMeshes && window._planetModal && window.celestialBodies && window.THREE && window.renderCamera) {
+        var rect = renderer.domElement.getBoundingClientRect();
+        var mouse = new THREE.Vector2();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        var raycaster = new THREE.Raycaster();
+        raycaster.setFromCamera(mouse, renderCamera.camera || renderCamera);
+        var planetMeshes = window.getPlanetMeshes();
+        var intersects = raycaster.intersectObjects(planetMeshes, true);
+        var found = null;
+        if (intersects.length > 0) {
+            // Find the celestialBody object for the intersected mesh/group
+            for (var k in celestialBodies) {
+                var body = celestialBodies[k];
+                if (body && body.objectGroup && (intersects[0].object === body.objectGroup || intersects[0].object.parent === body.objectGroup)) {
+                    found = body;
+                    break;
+                }
+            }
+        }
+        if (found) {
+            var html = window.getPlanetDetailsHTML(found);
+            window._planetModal.show(html, event.clientX, event.clientY);
+        } else {
+            window._planetModal.hide();
+        }
+    }
+    // --- PLANET HOVER MODAL LOGIC END ---
     // Keep the value in 0 -- 2 PI
     var body = params.Camera;
     if (mouseStatus.leftDown) {

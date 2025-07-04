@@ -1,0 +1,30 @@
+/* Modal/tooltip for planet info */
+.planet-modal {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  background: rgba(30, 30, 40, 0.97);
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+  padding: 16px 22px;
+  min-width: 180px;
+  font-size: 15px;
+  line-height: 1.5;
+  display: none;
+  transition: opacity 0.15s;
+  opacity: 0;
+  max-width: 320px;
+  pointer-events: none;
+}
+
+.planet-modal.visible {
+  display: block;
+  opacity: 1;
+}
+
+.planet-modal .planet-name {
+  font-weight: bold;
+  font-size: 17px;
+  margin-bottom: 6px;
+}

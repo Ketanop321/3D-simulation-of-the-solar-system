@@ -16,10 +16,20 @@ CelestialBody.prototype.updateOrbitAndRotation = function (time) {
         //r=a*(1-e^2)/(1+ecoswt)
         //x=rcoswt+c
         //y=rsinwt
-        var r = this.orbit.semiMajorAxis * (1 - this.orbit.eccentricity * this.orbit.eccentricity) / (1 + this.orbit.eccentricity * Math.cos(10.0 * -time / this.orbit.period));
-        var x = referenceFrameX + (r * Math.cos(10.0 * -time / this.orbit.period)) * Math.cos(this.orbit.inclination / 180.0 * Math.PI);
-        var y = referenceFrameY + (r * Math.cos(10.0 * -time / this.orbit.period)) * Math.sin(this.orbit.inclination / 180.0 * Math.PI);
-        var z = referenceFrameZ + r * Math.sin(10.0 * -time / this.orbit.period);
+        // Get speed multiplier for this planet (default to 1.0 if not set)
+        var speedMultiplier = window.speedParams && window.speedParams[this.name] !== undefined ? 
+                            window.speedParams[this.name] : 1.0;
+                            
+        // Apply speed multiplier to the time
+        var adjustedTime = time * speedMultiplier;
+        
+        var r = this.orbit.semiMajorAxis * (1 - this.orbit.eccentricity * this.orbit.eccentricity) / 
+               (1 + this.orbit.eccentricity * Math.cos(10.0 * -adjustedTime / this.orbit.period));
+        var x = referenceFrameX + (r * Math.cos(10.0 * -adjustedTime / this.orbit.period)) * 
+               Math.cos(this.orbit.inclination / 180.0 * Math.PI);
+        var y = referenceFrameY + (r * Math.cos(10.0 * -adjustedTime / this.orbit.period)) * 
+               Math.sin(this.orbit.inclination / 180.0 * Math.PI);
+        var z = referenceFrameZ + r * Math.sin(10.0 * -adjustedTime / this.orbit.period);
         if (this.isComet) {
             this.cometPivot.position.set(x, y, z);
             if (cometSet) {
