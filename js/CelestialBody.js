@@ -15,8 +15,7 @@ var CelestialBody = function (obj) {
     this.children = [];
     // TODO: Model info, to be implemented
     // Orbit parameters
-    // 周期（恒星）、半长轴、离心率、倾角、升交点黄经、平近点角 (历时原点假设轨道是圆形时的黄经偏移)
-
+  
     this.position = {
         x: 0, y: 0, z: 0,
     };
@@ -30,20 +29,12 @@ var CelestialBody = function (obj) {
         period: 1., semiMajorAxis: 1., eccentricity: 0.,
         inclination: 0., ascendingNode: 0., meanLongitude: 0.
     };
-    // Rotation parameters
-    // 周期（恒星）、倾角（黄赤夹角）、子午角（自转轴所在的与黄道垂直的平面，即子午面，与xOy平面的夹角）、历时原点角度偏移
-    // 注：这里我们使用xOz平面作为黄道面
+   
     this.rotation = {
         period: 1., inclination: 1.,
         meridianAngle: 0., offset: 0.
     };
-    // 远景时显示光芒的参数设定
-    // albedo 为反照率
-    // 下面给出一个该把这个光点画多亮的粗略估计（只是用来看的，不是很严谨）
-    // x > R/k:   (2 - <c, p>/(|c|*|p|)) * R^2 * a * log(k*x0/R) / log(k*x/R)
-    // else:    0
-    // 其中，a是反照率，记号<,>表示内积，|.|是二范数，c是摄像机坐标，p是天体坐标
-    // R 是天体半径，x 是距天体的距离，即|c - p|，k 是一个系数
+   
     this.albedo = 1.;
     this.shineColor = 0xffffff;
     // Material settings
